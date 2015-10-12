@@ -3,6 +3,10 @@
   function: average
   limit: 10
   query: select * from "foo.counter"
+  notifiers:
+    - slack
+    - hipchat
+    - foobar
   trigger: 
     operator: >
     value: 10
@@ -12,6 +16,10 @@
   function: average
   limit: 10
   query: select * from "foo.counter"
+  notifiers:
+    - slack
+    - hipchat
+    - foobar
   trigger: 
     operator: <
     value: 10

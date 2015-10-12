@@ -1,0 +1,18 @@
+- name: Incoming Foo
+  type: influxdb
+  function: average
+  limit: 10
+  query: select * from "foo.counter"
+  trigger: 
+    operator: >
+    value: 10
+      
+- name: Not Enough Foo
+  type: influxdb
+  function: average
+  limit: 10
+  query: select * from "foo.counter"
+  trigger: 
+    operator: <
+    value: 10
+      

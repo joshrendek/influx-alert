@@ -35,7 +35,8 @@ Example: ( see example.yml for more )
 ## Environment Variables
 ```
   * INFLUX_HOST
-  * INFLUX_PORT
+  * INFLUX_PORT (8086 is default)
+  * INFLUX_DB
   * INFLUX_USER
   * INFLUX_PASS
   * SLACK_API_TOKEN

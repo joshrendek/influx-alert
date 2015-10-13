@@ -32,12 +32,12 @@ Example: ( see example.yml for more )
   interval: 10
   query: select * from "foo.counter"
   notifiers:
-      - slack
-      - hipchat
-      - foobar
+    - slack
+    - hipchat
+    - foobar
   trigger:
-  operator: lt
-  value: 10
+    operator: lt
+    value: 10
 ```
 
 

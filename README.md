@@ -34,6 +34,10 @@ Example: ( see example.yml for more )
 
 ## Environment Variables
 ```
+  * INFLUX_HOST
+  * INFLUX_PORT
+  * INFLUX_USER
+  * INFLUX_PASS
   * SLACK_API_TOKEN
   * SLACK_ROOM
   * HIPCHAT_API_TOKEN

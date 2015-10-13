@@ -23,12 +23,6 @@ import (
 	"time"
 )
 
-const (
-	MyHost = "localhost"
-	MyPort = 8086
-	MyDB   = "statsd"
-)
-
 type Trigger struct {
 	Operator string
 	Value    int64

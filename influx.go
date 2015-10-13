@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/url"
 	"os"
+	"strconv"
 	"time"
 )
 
@@ -47,15 +48,17 @@ func query(query string) []float64 {
 var con *client.Client
 
 func setupInflux() {
-	u, err := url.Parse(fmt.Sprintf("http://%s:%d", MyHost, MyPort))
+	influx_port, _ := strconv.ParseInt(os.Getenv("INFLUX_PORT"), 10, 0)
+
+	u, err := url.Parse(fmt.Sprintf("http://%s:%d", os.Getenv("INFLUX_HOST"), influx_port))
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	conf := client.Config{
 		URL:      *u,
-		Username: "root",
-		Password: "root",
+		Username: os.Getenv("INFLUX_USER"),
+		Password: os.Getenv("INFLUX_PASS"),
 	}
 
 	con, err = client.NewClient(conf)

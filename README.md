@@ -12,6 +12,25 @@
   * `value`: value to compare against (note all values are floats internally)
 * `notifiers`: an array of notifiers, possible options are slack and hipchat
 
+Example: ( see example.yml for more )
+
+``` yml
+- name: Not Enough Foo
+type: influxdb
+function: average
+timeshift: 1h
+limit: 10
+interval: 10
+query: select * from "foo.counter"
+notifiers:
+    - slack
+    - hipchat
+    - foobar
+trigger:
+operator: lt
+value: 10
+```
+
 
 ## Environment Variables
 ```

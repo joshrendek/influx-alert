@@ -16,19 +16,19 @@ Example: ( see example.yml for more )
 
 ``` yml
 - name: Not Enough Foo
-type: influxdb
-function: average
-timeshift: 1h
-limit: 10
-interval: 10
-query: select * from "foo.counter"
-notifiers:
-    - slack
-    - hipchat
-    - foobar
-trigger:
-operator: lt
-value: 10
+  type: influxdb
+  function: average
+  timeshift: 1h
+  limit: 10
+  interval: 10
+  query: select * from "foo.counter"
+  notifiers:
+      - slack
+      - hipchat
+      - foobar
+  trigger:
+  operator: lt
+  value: 10
 ```
 
 

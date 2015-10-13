@@ -1,3 +1,8 @@
+## Influx Alert
+
+This is a tool to alert on data that is fed into
+InfluxDB (for example, via statsd) so you can get alerted on it.
+
 ## How to Use
 
 * `name`: the name of the alert ( will be used in notifier )

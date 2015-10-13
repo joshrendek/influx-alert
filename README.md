@@ -50,3 +50,9 @@ Example: ( see example.yml for more )
 ## Supported Backends
 
 * InfluxDB v0.9
+
+## TODO
+
+* [ ] Tests
+* [ ] Email Notifier
+* [ ] Web notifier (POST?)

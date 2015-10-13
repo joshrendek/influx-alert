@@ -5,7 +5,7 @@ InfluxDB (for example, via statsd) so you can get alerted on it.
 
 ## How to get it
 
-Go to releases, or download the latest here: !(v0.1)[https://github.com/joshrendek/influx-alert/releases/download/0.1/influx-alert]
+Go to releases, or download the latest here: [v0.1](https://github.com/joshrendek/influx-alert/releases/download/0.1/influx-alert)
 
 ## How to Use
 

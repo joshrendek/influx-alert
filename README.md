@@ -6,7 +6,7 @@
 * `limit`: the max number of results to return
 * `type`: influxdb (the only option for now)
 * `function`: min/max/average are the only supported functions for now
-* `query`: the influxb query to run (omit any limit or where clause on the time)
+* `query`: the influxdb query to run (omit any limit or where clause on the time)
 * `trigger`: the type of trigger and value that would trigger it
   * `operator`: gt/lt
   * `value`: value to compare against (note all values are floats internally)

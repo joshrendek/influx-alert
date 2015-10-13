@@ -3,6 +3,10 @@
 This is a tool to alert on data that is fed into
 InfluxDB (for example, via statsd) so you can get alerted on it.
 
+## How to get it
+
+Go to releases, or download the latest here: !(v0.1)[https://github.com/joshrendek/influx-alert/releases/download/0.1/influx-alert]
+
 ## How to Use
 
 * `name`: the name of the alert ( will be used in notifier )

@@ -20,6 +20,7 @@ import (
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"os"
+	"time"
 )
 
 const (
@@ -42,7 +43,9 @@ type Alert struct {
 	Type         string
 	Function     string
 	Limit        int
+	Timeshift    string
 	Query        string
+	Interval     float64
 	Trigger      Trigger
 	NotifiersRaw []string   `yaml:"notifiers"`
 	Notifiers    []Notifier `yaml:"-"`
@@ -73,8 +76,14 @@ func main() {
 
 	setupSlack()
 	setupHipchat()
-
+	done := make(chan bool)
 	for _, alert := range alerts {
-		alert.Run()
+		go func(alert Alert) {
+			for {
+				alert.Run()
+				time.Sleep(time.Duration(alert.Interval) * time.Second)
+			}
+		}(alert)
 	}
+	<-done // wait
 }

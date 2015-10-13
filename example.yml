@@ -1,26 +1,56 @@
+- name: Min Foo
+  type: influxdb
+  function: min
+  limit: 10
+  query: select * from "foo.counter"
+  interval: 5
+  timeshift: 1h
+  trigger:
+    operator: gt
+    value: 8 
+  notifiers:
+    - slack
+    - foobar
+- name: Max Foo
+  type: influxdb
+  function: max
+  limit: 10
+  query: select * from "foo.counter"
+  interval: 5
+  timeshift: 1h
+  trigger:
+    operator: gt
+    value: 8 
+  notifiers:
+    - slack
+    - foobar
 - name: Incoming Foo
   type: influxdb
   function: average
+  timeshift: 1h
   limit: 10
   query: select * from "foo.counter"
   notifiers:
     - slack
-    - hipchat
-    - foobar
+#    - hipchat
+#    - foobar
+  interval: 5 # in seconds
   trigger: 
-    operator: >
+    operator: gt
     value: 10
       
 - name: Not Enough Foo
   type: influxdb
   function: average
+  timeshift: 1h
   limit: 10
+  interval: 10
   query: select * from "foo.counter"
   notifiers:
-    - slack
-    - hipchat
-    - foobar
+#    - slack
+#    - hipchat
+#    - foobar
   trigger: 
-    operator: <
+    operator: lt
     value: 10
       

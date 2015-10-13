@@ -3,17 +3,28 @@ package main
 import (
 	"fmt"
 	"github.com/fatih/color"
+	"math"
 	"os"
 )
 
 func (alert *Alert) ApplyFunction(values []float64) float64 {
-	var applied_function float64
+	var applied_function float64 = 0
 	if alert.Function == "average" {
 		applied_function = 0
 		for _, i := range values {
 			applied_function += float64(i)
 		}
 		applied_function = applied_function / float64(alert.Limit)
+	} else if alert.Function == "max" {
+		applied_function = 0
+		for _, i := range values {
+			applied_function = math.Max(applied_function, i)
+		}
+	} else if alert.Function == "min" {
+		applied_function = 0
+		for _, i := range values {
+			applied_function = math.Min(applied_function, i)
+		}
 	}
 	return applied_function
 }
@@ -27,7 +38,7 @@ func (alert *Alert) Run() {
 		fmt.Println("Query: ", fmt.Sprintf("%s limit %d", alert.Query, alert.Limit))
 	}
 
-	values := query(fmt.Sprintf("%s limit %d", alert.Query, alert.Limit))
+	values := query(fmt.Sprintf("%s where time > now() - %s limit %d", alert.Query, alert.Timeshift, alert.Limit))
 
 	applied_function := alert.ApplyFunction(values)
 
@@ -37,9 +48,9 @@ func (alert *Alert) Run() {
 
 	alert_triggered := false
 	switch alert.Trigger.Operator {
-	case ">":
-		alert_triggered = float64(alert.Trigger.Value) > applied_function
-	case "<":
+	case "gt":
+		alert_triggered = applied_function > float64(alert.Trigger.Value)
+	case "lt":
 		alert_triggered = applied_function < float64(alert.Trigger.Value)
 	}
 
@@ -53,7 +64,7 @@ func (alert *Alert) Run() {
 		}
 
 	} else {
-		color.Green(fmt.Sprintf("[+] %s passed.", alert.Name))
+		color.Green(fmt.Sprintf("[+] %s passed. (%.2f)", alert.Name, applied_function))
 	}
 
 }

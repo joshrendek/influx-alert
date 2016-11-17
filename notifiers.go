@@ -6,11 +6,12 @@ Generate slack token: https://api.slack.com/web
 
 import (
 	"fmt"
+	"net/url"
+	"os"
+
 	"github.com/bluele/slack"
 	"github.com/fatih/color"
 	"github.com/tbruyelle/hipchat-go/hipchat"
-	"net/url"
-	"os"
 )
 
 func (n *Notifier) Run(message string) {
@@ -29,7 +30,7 @@ func (n *Notifier) Run(message string) {
 			color.Red("[!] HipChat used as a notifier, but not configured with ENV vars.")
 			return
 		}
-		_, err = hipchat_api.Room.Notification(os.Getenv("HIPCHAT_ROOM_ID"), &hipchat.NotificationRequest{Message: "Testing", Color: "red"})
+		_, err = hipchat_api.Room.Notification(os.Getenv("HIPCHAT_ROOM_ID"), &hipchat.NotificationRequest{Message: message, Color: "red"})
 		if err != nil {
 			color.Red(fmt.Sprintf("[!] Error posting to HipChat: %s", err))
 		}

@@ -1,0 +1,4 @@
+*.yml
+vendor
+!glide.yaml
+!example.yml

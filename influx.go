@@ -3,12 +3,13 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/influxdb/influxdb/client"
 	"log"
 	"net/url"
 	"os"
 	"strconv"
 	"time"
+
+	"github.com/influxdb/influxdb/client"
 )
 
 func queryDB(cmd string) (res []client.Result, err error) {
@@ -35,6 +36,9 @@ func query(query string) []float64 {
 		t, err := time.Parse(time.RFC3339, row[0].(string))
 		if err != nil {
 			log.Fatal(err)
+		}
+		if row[1] == nil {
+			continue
 		}
 		val, _ := row[1].(json.Number).Float64()
 		ret = append(ret, val)

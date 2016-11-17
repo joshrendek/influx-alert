@@ -1,0 +1,28 @@
+package: github.com/joshrendek/influx-alert
+import:
+- package: github.com/bluele/slack
+  version: fe9f1a86e811e671271182af507d0a51005000cc
+- package: github.com/fatih/color
+  version: 76d423163af754ff6423d2d9be0057fbf03c57c2
+- package: github.com/google/go-querystring
+  version: 547ef5ac979778feb2f760cdb5f4eae1a2207b86
+  subpackages:
+  - query
+- package: github.com/influxdb/influxdb
+  version: 16b3084ca90921aa1281204a6ad329732f956af6
+  subpackages:
+  - client
+  - models
+  - pkg/escape
+- package: github.com/mattn/go-isatty
+  version: 7fcbc72f853b92b5720db4a6b8482be612daef24
+- package: github.com/ogier/pflag
+  version: 2e6f5f3f0c40ab9cb459742296f6a2aaab1fd5dc
+- package: github.com/shiena/ansicolor
+  version: d445752f6f66f9cd987722f109149f6799cdf1de
+- package: github.com/tbruyelle/hipchat-go
+  version: 182610ac66fc1ac987a5bd1941c8a602aaae2d0b
+  subpackages:
+  - hipchat
+- package: gopkg.in/yaml.v2
+  version: 7ad95dd0798a40da1ccdff6dff35fd177b5edf40

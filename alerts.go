@@ -2,43 +2,55 @@ package main
 
 import (
 	"fmt"
-	"github.com/fatih/color"
 	"math"
 	"os"
+
+	"github.com/fatih/color"
 )
 
 func (alert *Alert) ApplyFunction(values []float64) float64 {
-	var applied_function float64 = 0
+	var appliedFunction float64
+
+	if len(values) > 0 {
+		appliedFunction = values[0]
+	}
+
 	if alert.Function == "average" {
-		applied_function = 0
 		for _, i := range values {
-			applied_function += float64(i)
+			appliedFunction += float64(i)
 		}
-		applied_function = applied_function / float64(alert.Limit)
+		appliedFunction = appliedFunction / float64(len(values))
 	} else if alert.Function == "max" {
-		applied_function = 0
 		for _, i := range values {
-			applied_function = math.Max(applied_function, i)
+			appliedFunction = math.Max(appliedFunction, i)
 		}
 	} else if alert.Function == "min" {
-		applied_function = 0
 		for _, i := range values {
-			applied_function = math.Min(applied_function, i)
+			appliedFunction = math.Min(appliedFunction, i)
 		}
 	}
-	return applied_function
+	return appliedFunction
 }
 
-func (alert *Alert) Run() {
+func (alert *Alert) Setup() {
 	for _, n := range alert.NotifiersRaw {
 		alert.Notifiers = append(alert.Notifiers, Notifier{Name: n})
 	}
 
+}
+
+func (alert *Alert) Run() {
 	if os.Getenv("DEBUG") == "true" {
 		fmt.Println("Query: ", fmt.Sprintf("%s limit %d", alert.Query, alert.Limit))
 	}
 
-	values := query(fmt.Sprintf("%s where time > now() - %s limit %d", alert.Query, alert.Timeshift, alert.Limit))
+	groupByQuery := ""
+	if len(alert.GroupBy) > 0 {
+		groupByQuery = fmt.Sprintf("GROUP BY time(%s)", alert.GroupBy)
+	}
+
+	values := query(fmt.Sprintf("%s where time > now() - %s %s limit %d",
+		alert.Query, alert.Timeshift, groupByQuery, alert.Limit))
 
 	applied_function := alert.ApplyFunction(values)
 
@@ -60,6 +72,7 @@ func (alert *Alert) Run() {
 		color.Red(message)
 
 		for _, n := range alert.Notifiers {
+			fmt.Printf("<-> Alert sending: %+v\n", alert)
 			n.Run(message)
 		}
 

@@ -14,13 +14,14 @@ Environment Variables:
 
 import (
 	"fmt"
-	"github.com/bluele/slack"
-	flag "github.com/ogier/pflag"
-	"github.com/tbruyelle/hipchat-go/hipchat"
-	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"os"
 	"time"
+
+	"github.com/bluele/slack"
+	flag "github.com/ogier/pflag"
+	"github.com/tbruyelle/hipchat-go/hipchat"
+	yaml "gopkg.in/yaml.v2"
 )
 
 type Trigger struct {
@@ -32,12 +33,18 @@ type Notifier struct {
 	Name string
 }
 
+type TriggeredAlert struct {
+	Hash        string
+	TriggeredAt time.Time
+}
+
 type Alert struct {
 	Name         string
 	Type         string
 	Function     string
 	Limit        int
 	Timeshift    string
+	GroupBy      string `yaml:"group_by"`
 	Query        string
 	Interval     float64
 	Trigger      Trigger
@@ -49,6 +56,10 @@ var err error
 var slack_api *slack.Slack
 var slack_channel *slack.Channel
 var hipchat_api *hipchat.Client
+
+var (
+	triggeredAlerts = map[string]TriggeredAlert{}
+)
 
 func main() {
 	var file *string = flag.StringP("config", "c", "", "Config file to use")
@@ -70,9 +81,11 @@ func main() {
 
 	setupSlack()
 	setupHipchat()
+
 	done := make(chan bool)
 	for _, alert := range alerts {
 		go func(alert Alert) {
+			alert.Setup()
 			for {
 				alert.Run()
 				time.Sleep(time.Duration(alert.Interval) * time.Second)

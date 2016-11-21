@@ -1,5 +1,5 @@
-hash: aabcde9632071f8c7957aff6f753ec6f187368bbce8b2eda0e38baa9c415af45
-updated: 2016-11-15T17:28:09.767712765-05:00
+hash: 35cce9726593a72bc89c13eae06d9e8c8a0aa4bc9d25f3db4592e4140030bbf9
+updated: 2016-11-21T11:16:26.735674057-05:00
 imports:
 - name: github.com/bluele/slack
   version: fe9f1a86e811e671271182af507d0a51005000cc
@@ -19,6 +19,8 @@ imports:
   version: 7fcbc72f853b92b5720db4a6b8482be612daef24
 - name: github.com/ogier/pflag
   version: 2e6f5f3f0c40ab9cb459742296f6a2aaab1fd5dc
+- name: github.com/PagerDuty/go-pagerduty
+  version: f4d5289481b2c05f2b23f81a64dff86aca960962
 - name: github.com/shiena/ansicolor
   version: d445752f6f66f9cd987722f109149f6799cdf1de
 - name: github.com/tbruyelle/hipchat-go

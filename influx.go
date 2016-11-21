@@ -32,6 +32,14 @@ func query(query string) []float64 {
 	if err != nil {
 		log.Fatal(err)
 	}
+	if len(res) < 1 {
+		return ret
+	}
+
+	if len(res[0].Series) < 1 {
+		return ret
+	}
+
 	for i, row := range res[0].Series[0].Values {
 		t, err := time.Parse(time.RFC3339, row[0].(string))
 		if err != nil {

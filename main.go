@@ -16,6 +16,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"sync"
 	"time"
 
 	"github.com/bluele/slack"
@@ -41,6 +42,7 @@ type TriggeredAlert struct {
 type Alert struct {
 	Name         string
 	Type         string
+	Hash         string
 	Function     string
 	Limit        int
 	Timeshift    string
@@ -58,7 +60,10 @@ var slack_channel *slack.Channel
 var hipchat_api *hipchat.Client
 
 var (
-	triggeredAlerts = map[string]TriggeredAlert{}
+	tMutex                sync.Mutex
+	triggeredAlerts       = map[string]TriggeredAlert{}
+	pagerduty_api_token   string
+	pagerduty_service_key string
 )
 
 func main() {
@@ -81,6 +86,7 @@ func main() {
 
 	setupSlack()
 	setupHipchat()
+	setupPagerduty()
 
 	done := make(chan bool)
 	for _, alert := range alerts {
